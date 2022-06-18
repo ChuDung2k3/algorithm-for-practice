@@ -1,0 +1,35 @@
+#include<bits/stdc++.h>
+
+using namespace std;
+
+void solve(int n, int m)
+{
+	multiset<int>ms;
+	for(int i = 0; i < n; ++i)
+	{
+		int x; cin >> x;
+		ms.insert(x);
+	}
+	for(int i = 0;i < m; ++i)
+	{
+		int x; cin >> x;
+		auto it = ms.upper_bound(x);
+		if(it == ms.begin())
+		{
+			cout << "-1\n";
+		}
+		else
+		{
+			int tmp =*(--it);
+			cout << tmp << endl;
+			ms.erase(it);
+		}
+	}
+}
+int main()
+{
+	int n, m;
+	cin >> n >> m;
+	solve(n,m);
+	return 0;
+}
