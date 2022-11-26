@@ -1,81 +1,89 @@
-#include <bits/stdc++.h>
+#include<bits/stdc++.h>
+#define ll long long
+#define pb push_back
+#define fi first
+#define se second
 using namespace std;
- 
-using ll = long long;
- 
-struct edge{
-	int u, v;
-	int w;
+
+typedef pair<int, int> pi;
+typedef vector<int> vi;
+typedef vector<pi> vii;
+const int maxn = 100001;
+struct canh{
+    int x, y, w;
 };
- 
-const int maxn = 1001;
-int n, m;
-int parent[maxn], sz[maxn];
-vector<edge> canh;
- 
-void make_set(){
-	for(int i = 1; i <= n; i++){
-		parent[i] = i;
-		sz[i] = 1;
-	}
+int n,m;
+vector<pair<int, int>> adj[maxn];
+bool used[maxn];
+int par[maxn], d[maxn];
+int tmp = 0;
+void nhap()
+{
+    cin >> n >> m;
+    for(int i = 0; i < m; ++i)
+    {
+        int x, y, w; cin >> x >> y >> w;
+        tmp = x;
+        adj[x].pb({y, w});
+        adj[y].pb({x, w});
+    }
+    memset(used, false, sizeof(used));
+    for(int i = 1; i <= n; ++i) d[i] = INT_MAX;
 }
- 
-int find(int v){
-	if(v == parent[v]) return v;
-	return parent[v] = find(parent[v]);
+void prim(int u)
+{
+    priority_queue<pair<int, int>, vector<pi>, greater<pair<int, int>>>Q;
+    vector<canh>MST;
+    ll res = 0,cnt = 0;
+    Q.push({0, u});
+    while(!Q.empty())
+    {
+        pair<int, int> top = Q.top(); Q.pop();
+        int dinh = top.se, trongso = top.fi;
+        if(used[dinh]) continue;
+        used[dinh] = true;
+        if(u != dinh)
+        {
+            res += trongso;
+            ++cnt;
+            MST.pb({dinh, par[dinh], trongso});
+        }
+//        res += trongso;
+//            ++cnt;
+//            MST.pb({dinh, par[dinh], trongso});
+        for(auto it : adj[dinh])
+        {
+            int y = it.fi, w = it.se;
+            if(!used[y] && w < d[y])
+            {
+                Q.push({w, y});
+                d[y] = w;
+                par[y] = dinh; 
+            }
+        }
+    }
+    if(cnt == n - 1) cout << res << '\n';
+    else cout <<"IMPOSSIBLE\n";
+    for(auto it : MST)
+    {
+        cout << it.x << " " << it.y << " " << it.w <<'\n';
+    }
 }
- 
-bool Union(int a, int b){
-	a = find(a);
-	b = find(b);
-	if(a == b) return false; // khong the gop a, b vao voi nhau
-	if(sz[a] < sz[b]) swap(a, b);
-	parent[b] = a;
-	sz[a] + sz[b];
-	return true;
+int main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    nhap();
+    prim(1);
+    return 0;
 }
- 
-void inp(){
-	cin >> n >> m;
-	for(int i = 0; i < m; i++){
-		int x, y, w; cin >> x >> y >> w;
-		edge e;
-		e.u = x; e.v = y; e.w = w;
-		canh.push_back(e);
-	}
-}
- 
-bool cmp(edge a, edge b){
-	return a.w < b.w;
-}
- 
-void kruskal(){
-	//Tao cay khung cuc tieu rong
-	vector<edge> mst;
-	int d = 0;
-	//Sort danh sach canh theo chieu dai tang dan
-	sort(canh.begin(), canh.end(), cmp);
-	//Buoc 3 lap
-	for(int i = 0; i < m; i++){
-		if(mst.size() == n - 1) break;
-		edge e = canh[i]; // chon canh e la canh nho nhat
-		if(Union(e.u, e.v)){
-			mst.push_back(e);
-			d += e.w;
-		}
-	}
-	//Tra ve ket qua
-	if(mst.size() != n - 1){
-		cout << "IMPOSSIBLE\n";
-	}
-	else{
-		cout << d << endl;
-		
-	}
-}
- 
-int main(){
-	inp();
-	make_set();
-	kruskal();
-}
+//6 8
+//1 2 1
+//1 6 2
+//2 6 10
+//2 3 3
+//3 4 4
+//3 5 5
+//4 5 6
+//4 6 8
+

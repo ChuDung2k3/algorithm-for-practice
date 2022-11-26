@@ -1,0 +1,5 @@
+Khoa : 1 1 Cho toi xin mot ve di tuoi tho x5
+Khoa : 2 2 Sach Tieng Viet y1
+Khoa : 3 3 Tu tuong HCM z2
+Khoa : 4 4 Toan roi rac acd2
+Khoa : 5 5 Lich su Dang ngach53

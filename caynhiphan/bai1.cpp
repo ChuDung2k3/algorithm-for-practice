@@ -24,7 +24,7 @@ void insert(Node *root, int u, int v, char c)
 	{
 		makeNode(root, u, v, c);
 	}
-	insert(root -> left, u, v, v);
+	insert(root -> left, u, v, c);
 	insert(root -> right, u, v, c);
 }
 int height(Node *root)

@@ -1,43 +1,61 @@
+#include<bits/stdc++.h>
+#define ll long long
 
+using namespace std;
 
-int t,n,a[15];
-char s[100];
+int n, m, u, v;
+char a[501][501];
+int dx[4]={0,-1,0,1};
+int dy[4]={-1,0,1,0};
 
-
-int check()
+bool dfs(int i, int j, int pre, int cnt)
 {
-    int i,j,b[100],c=0,d[15],sum;
-    for(i=2;i<=n;++i)
-	{
-        for(j=0;j<=9;++j) d[j]=0;
-        for(j=n-1;j>=0;--j)// Nhan
-		{
-            sum=(s[j]-'0')*i+c;
-            b[j] = sum%10;
-            
-			d[b[j]]++;// dem kitu
-            
-            c=sum/10;
-        }
-        if (c>0) d[c]++;
-        for(j=0;j<=9;++j)
+    if(cnt == 3) return false;
+    for(int k = 0; k < 4; ++k)
+    {
+        int i1 = i + dx[k];
+        int j1 = j + dy[k];
+        if(i1 >= 1 && i1 <= n && j1 >= 1 && j1 <= m && a[i1][j1] != '*')
         {
-        	
-        	if (a[j]!=d[j]) return 0;//142857 × 2 = 285714
-		}
+            if(a[i1][j1] == '.')
+            {
+                a[i1][j1] = '*';
+                int tmp = cnt;
+                if(k != pre && a[i][j] != 'S')
+                {
+                    cnt += 1;
+//                    tmp += 1;
+                }
+//                if(dfs(i1, j1, k, tmp)) return true;
+				if(dfs(i1, j1, k, cnt)) return true;
+                a[i1][j1] = '.';
+                
+            }
+            else if(a[i1][j1] == 'T')
+            {
+                if(pre != k ) ++cnt;
+                if(cnt <= 2) return true;
+            }
+        }
     }
-    return 1;
+    return false;
 }
-
-int main(){
-    scanf("%d",&t);
-    while(t--)
-	{
-        scanf("%s",&s);
-        n=strlen(s);
-        for(int i=0;i<=9;++i) a[i]=0;
-        for(int i=0;i<n;++i) a[s[i]-'0']++;// dem ki tu;
-        if(check()) printf("YES");
-		else printf("NO"); 
+int main()
+{
+    cin >> n >> m;
+    for(int i = 1; i <= n; ++i)
+    {
+        for(int j = 1; j <= m; ++j)
+        {
+            cin >> a[i][j];
+            if(a[i][j] == 'S')
+            {
+                u = i;
+                v = j;
+            }
+        }
     }
+    if(dfs(u, v, 100, 0)) cout << "YES";
+    else cout << "NO";
+    return 0;
 }

@@ -39,9 +39,9 @@ void nhap()
 	cin >> n >> m;
 	for(int i = 1; i <= m; ++i)
 	{
-		int x, y, w;
-		cin >> x >>y >> w;
-		dscanh.pb({x, y, w});
+		canh a;
+		cin >> a.x >> a.y>> a.w;
+		dscanh.pb(a);
 	}
 	for(int i = 1; i <= n; ++i)
 	{

@@ -1,0 +1,21 @@
+4
+Ai thong minh hon hoc lop 5?
+Nguyen Van A
+Tran van B
+Chu Van Dung
+Hoang Van Phuong
+Ban thich gi?
+O to
+xe may
+may bay
+xe dap
+Ai thong minh hon hoc lop 6?
+Nguyen Van A
+Tran van B
+Chu Van Dung
+Hoang Van Phuong
+Ai thong minh hon hoc lop 7?
+Nguyen Van A
+Tran van B
+Chu Van Dung
+Hoang Van Phuong
