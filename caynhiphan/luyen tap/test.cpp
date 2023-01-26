@@ -9,157 +9,62 @@ typedef pair<int, int> pi;
 typedef vector<int> vi;
 typedef vector<pi> vii;
 
-class SinhVien{
-	private:
-		string msv, ten, gt;
-	public:
-		friend istream& operator >> (istream& in, SinhVien &a)
-		{
-			in >> a.msv;
-			in.ignore();
-			getline(in, a.ten);
-			in >> a.gt;
-			return in;
-		}
-		friend ostream& operator <<(ostream&out, SinhVien a)
-		{
-			out << a.msv << " " << a.ten << " " << a.gt;
-		}
-};
-struct Node{
-	SinhVien val;
-	Node *next;
+struct node{
+	int data;
+	node *left, *right;
+	node(int x)
+	{
+		data = x;
+		left = right = NULL;
+	}
 };
 
-int size(Node *head)
+void makeNode(node *root, int a, int b, int c) // cha : c, con: b, (vi tri: c --> trai(0), phai(1));
 {
-	int cnt = 0;
-	while(head != NULL)
-	{
-		++cnt;
-		head = head->next;
-	}
-	return cnt;
+	if (c == 0) root->left = new node(b);
+	else root->right = new node(b);
 }
-Node *makeNode(SinhVien x)
+
+void insert(node *root, int a, int b, int c)
 {
-	Node *tmp = new Node();
-	tmp->val = x;
-	tmp->next = NULL;
-	return tmp;
+	if (root == NULL) return;
+	if (root->data == a)
+	{
+		makeNode(root, a, b, c);
+	}
+	insert(root->left, a, b, c);
+	insert(root->right, a, b, c);
 }
-void iLa(Node *&head, SinhVien x)
+
+void preOrder(node *root)
 {
-	Node *t = head;
-	Node *tmp = makeNode(x);
-	if (head == NULL)
-	{
-		head = makeNode(x);
-	}
-	else
-	{
-		while(t->next != NULL)
-		{
-			t = t->next;
-		}
-		t->next = tmp;
-	}
+	if (root == NULL) return;
+	cout << root->data << " ";
+	preOrder(root->left);
+	preOrder(root->right);
 }
-void iFi(Node *&head, SinhVien x)
-{
-	Node *tmp = makeNode(x);
-	tmp->next = head;
-	head = tmp;
-}
-void xoa(Node *&head, int i)
-{
-	int n = size(head);
-	cout << n <<" " << i <<'\n';
-	if (n == 0 || i > n || i <= 0)
-	{
-	 	cout << "Khong co phan tu de xoa\n"; return;
-	} 
-	Node *tmp = head;
-	if (i == 1)
-	{
-		head = tmp->next;
-		return;
-	}
-	if(i == 2)
-	{
-		tmp->next= tmp->next->next;
-		return;
-	}
-	for (int k = 1; k <= i - 2; ++k)
-	{
-		tmp = tmp->next;
-	}
-	// tmp : i - 1;
-	tmp->next = tmp->next->next;
-}
-void thayThe(Node *&head, int i)
-{
-	int n = size(head);
-	SinhVien x;
-	cout << "Nhap ten sinh vien can thay the: \n";
-	cin >> x;
-	Node *tmp = head;
-	Node *newNode = makeNode(x);
-	if (i > n || i <= 0|| n == 0)
-	{
-		cout << "Loi!!\n";
-		return;
-	}
-	if(i == 1)
-	{
-		newNode->next = tmp->next;
-		head = newNode;
-		return;
-	}
-	if (i == 2)
-	{
-		newNode->next = tmp->next->next;
-		tmp->next = newNode;
-		return;
-	}
-	for(int k = 1; k <= i - 2; ++k)
-	{
-		tmp = tmp->next;
-	}
-	newNode->next = tmp->next->next;
-	tmp->next = newNode;
-}
-void duyet(Node *head)
-{
-	while(head != NULL)
-	{
-		cout << head->val <<'\n';
-		head = head->next;
-	}
-}
+
 int main()
 {
-//	ios_base::sync_with_stdio(false);
-//    cin.tie(NULL);
-    Node *head = NULL;
-	SinhVien x; cin >> x;
-	iLa(head, x);
-	cin >> x;
-	iFi(head, x);
-	cin >> x;
-	iFi(head, x);
-	duyet(head);
-//	xoa(head, 3);
-	thayThe(head, 3);
-	duyet(head);
+	ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    int n; cin >> n; //Nhap canh cua canh
+    node *root = NULL;
+    while(n--)
+    {
+    	int a, b, c;
+    	cin >> a >> b >> c;
+    	if (root == NULL)
+    	{
+    		root = new node(a);
+    		makeNode(root, a, b, c);
+		}
+		else insert(root, a, b, c);
+	}
+	preOrder(root);
 	return 0;
 }
-//123123
-//Chu Dung
-//10/04/2003
-//213123
-//Pham Linh
-//21/2/2003
-//56756756
-//Superman
-//12/8/2003
+//test mau:
+//6
+//1 2 0 1 3 1 2 4 0 2 5 1 3 6 0 3 7 1
+

@@ -41,7 +41,7 @@ class Vector{
 		A = new T[N];
 		for(int i=0;i<n;i++)
 			A[i] = V[i];
-		delete V;
+		if (V)delete []V;
 		V = A;
 	    int k = n-1;
     	while(k>=r)
@@ -49,7 +49,7 @@ class Vector{
     	  V[k+1] = V[k];
     	   k--;
     	}
-	 }
+	}
 	 V[r]= o;
 	 n++;
 	 return 1;

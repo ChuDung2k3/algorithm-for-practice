@@ -6,22 +6,22 @@
 using namespace std;
 template <class T>
 class SingleList{
-private:
-	Node<T> *header;  // Con tro tro vao dau danh sach
-	Node<T> *trailer; // Con tro tro vao phan tu cuoi cua danh sach
-	long n;		       // so phan tu hien co cua danh sach
-public:
-	SingleList();
-	long   size();
-	int    isEmpty();
-	Node<T>* first();	// Tra lai dia chi do con tro header tro den
-	Node<T>* last();	// Tra lai dia chi do con tro trailer tro den
-	void replace(Node<T> *p, T e); //Thay the phan tu luu trong p bang phan tu e va tra lai dia chi p
-	Node<T>* insertAfter(Node<T> *p, T e); // Chen them node sau node do p tro toi
-	Node<T>* insertFirst(T e); // Chen them 1 node vao dau danh sach
-	Node<T>* insertLast(T e);  //Chen them mot node vao cuoi danh sach
-	void remove(Node<T> *p);		 // Loai bo node do con tro p tro toi
-	Node<T>* getNode(int i);
+	private:
+		Node<T> *header;  // Con tro tro vao dau danh sach
+		Node<T> *trailer; // Con tro tro vao phan tu cuoi cua danh sach
+		long n;		       // so phan tu hien co cua danh sach
+	public:
+		SingleList();
+		long   size();
+		int    isEmpty();
+		Node<T>* first();	// Tra lai dia chi do con tro header tro den
+		Node<T>* last();	// Tra lai dia chi do con tro trailer tro den
+		void replace(Node<T> *p, T e); //Thay the phan tu luu trong p bang phan tu e va tra lai dia chi p
+		Node<T>* insertAfter(Node<T> *p, T e); // Chen them node sau node do p tro toi
+		Node<T>* insertFirst(T e); // Chen them 1 node vao dau danh sach
+		Node<T>* insertLast(T e);  //Chen them mot node vao cuoi danh sach
+		void remove(Node<T> *p);		 // Loai bo node do con tro p tro toi
+		Node<T>* getNode(int i);
 };
 //-------------------------------------------------------------------------------------------------------------------------------
 template <class T>
